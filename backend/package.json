@@ -1,0 +1,7 @@
+{
+  "name": "homenest-backend",
+  "scripts": {
+    "backend": "C:\\Users\\smano\\tools\\apache-maven-3.9.6\\bin\\mvn.cmd spring-boot:run",
+    "build": "C:\\Users\\smano\\tools\\apache-maven-3.9.6\\bin\\mvn.cmd clean package -DskipTests"
+  }
+}
