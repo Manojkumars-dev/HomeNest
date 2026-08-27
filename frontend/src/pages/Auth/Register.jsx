@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock, Phone, User, CheckCircle, Home, Building2 } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, Phone, User, CheckCircle, Home, Building2, AlertCircle } from 'lucide-react';
 import Logo from '../../components/Logo';
 import { useAuth } from '../../context/AuthContext';
 
@@ -42,6 +42,7 @@ export default function Register() {
   const [showPassword, setShowPassword]   = useState(false);
   const [showConfirm,  setShowConfirm]    = useState(false);
   const [errors,       setErrors]         = useState({});
+  const [serverError,  setServerError]    = useState('');
   const [isLoading,    setIsLoading]      = useState(false);
 
   const strength = getPasswordStrength(form.password);
@@ -50,6 +51,7 @@ export default function Register() {
   const set = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+    if (serverError) setServerError('');
   };
 
   // ── Validation ─────────────────────────────────────────────
@@ -68,6 +70,7 @@ export default function Register() {
   // ── Submit ─────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setServerError('');
     if (!validate()) return;
     setIsLoading(true);
     try {
@@ -78,6 +81,7 @@ export default function Register() {
       else navigate('/', { replace: true });
     } catch (err) {
       console.error(err);
+      setServerError(err.message || 'Registration failed. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -212,6 +216,14 @@ export default function Register() {
               <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)' }}>{role === 'TENANT' ? 'Tenant' : 'Owner'}</span>
             </div>
           </div>
+
+          {/* Server Error Banner */}
+          {serverError && (
+            <div style={{ backgroundColor: 'rgba(186,0,54,0.06)', border: '1px solid rgba(186,0,54,0.2)', borderRadius: '10px', padding: '12px 16px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <AlertCircle size={16} color="var(--color-primary)" />
+              <span style={{ color: 'var(--color-primary)', fontSize: '13px', fontWeight: 500 }}>{serverError}</span>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
 
