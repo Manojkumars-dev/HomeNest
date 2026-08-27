@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://homenest-api.onrender.com',
   headers: { 'Content-Type': 'application/json' },
-  timeout: 10000,
+  timeout: 30000, // 30s timeout to handle free-tier cold starts
 });
 
 // Attach JWT token to every request
