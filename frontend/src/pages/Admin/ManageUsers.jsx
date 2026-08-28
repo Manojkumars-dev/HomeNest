@@ -117,19 +117,37 @@ export default function ManageUsers() {
                         {user.verified ? 'VERIFIED' : 'UNVERIFIED'}
                       </span>
                     </td>
-                    <td style={{ padding: '12px', textAlign: 'right', gap: '8px', display: 'flex', justifyContent: 'flex-end' }}>
-                      <button 
-                        onClick={() => toggleActive(user.id, user.active)}
-                        style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid #d1d5db', background: 'white', cursor: 'pointer', fontSize: '12px' }}
-                      >
-                        {user.active ? 'Ban' : 'Unban'}
-                      </button>
-                      <button 
-                        onClick={() => toggleVerified(user.id, user.verified)}
-                        style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid #d1d5db', background: 'white', cursor: 'pointer', fontSize: '12px' }}
-                      >
-                        {user.verified ? 'Unverify' : 'Verify'}
-                      </button>
+                    <td style={{ padding: '12px', textAlign: 'right', gap: '8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                      {user.role === 'ADMIN' ? (
+                        <span style={{ fontSize: '12px', color: 'var(--color-foggy)', fontStyle: 'italic', padding: '6px 12px' }}>
+                          Admin Account
+                        </span>
+                      ) : (
+                        <>
+                          <button 
+                            onClick={() => toggleActive(user.id, user.active)}
+                            style={{ 
+                              padding: '6px 12px', borderRadius: '6px', border: '1px solid #d1d5db', 
+                              backgroundColor: user.active ? '#fee2e2' : '#dcfce7',
+                              color: user.active ? '#991b1b' : '#166534',
+                              cursor: 'pointer', fontSize: '12px', fontWeight: 600
+                            }}
+                          >
+                            {user.active ? 'Ban' : 'Unban'}
+                          </button>
+                          <button 
+                            onClick={() => toggleVerified(user.id, user.verified)}
+                            style={{ 
+                              padding: '6px 12px', borderRadius: '6px', border: '1px solid #d1d5db', 
+                              backgroundColor: user.verified ? '#f3f4f6' : '#eff6ff',
+                              color: user.verified ? '#4b5563' : '#1d4ed8',
+                              cursor: 'pointer', fontSize: '12px', fontWeight: 600
+                            }}
+                          >
+                            {user.verified ? 'Unverify' : 'Verify'}
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

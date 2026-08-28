@@ -97,6 +97,9 @@ public class AdminController {
     public ResponseEntity<Map<String, Object>> toggleActive(@PathVariable Long id) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("User not found"));
+        if (user.getRole() == User.Role.ADMIN) {
+            throw new RuntimeException("Admin accounts cannot be banned");
+        }
         user.setActive(!user.isActive());
         userRepository.save(user);
         Map<String, Object> result = new HashMap<>();
@@ -110,6 +113,9 @@ public class AdminController {
     public ResponseEntity<Map<String, Object>> toggleVerified(@PathVariable Long id) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("User not found"));
+        if (user.getRole() == User.Role.ADMIN) {
+            throw new RuntimeException("Admin accounts cannot be modified");
+        }
         user.setVerified(!user.isVerified());
         userRepository.save(user);
         Map<String, Object> result = new HashMap<>();
