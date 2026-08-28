@@ -25,7 +25,7 @@ export default function TenantMessages() {
 
   const fetchConversations = async () => {
     try {
-      const response = await api.get('/messages/conversations');
+      const response = await api.get('/api/messages/conversations');
       setConversations(response.data);
     } catch (error) {
       console.error('Failed to fetch conversations:', error);
@@ -34,7 +34,7 @@ export default function TenantMessages() {
 
   const fetchMessages = async (userId) => {
     try {
-      const response = await api.get(`/messages/${userId}`);
+      const response = await api.get(`/api/messages/${userId}`);
       setMessages(response.data);
     } catch (error) {
       console.error('Failed to fetch messages:', error);
@@ -50,7 +50,7 @@ export default function TenantMessages() {
     if (!inputText.trim() || !selectedUser) return;
 
     try {
-      const response = await api.post('/messages', {
+      const response = await api.post('/api/messages', {
         receiverId: selectedUser.id,
         content: inputText
       });

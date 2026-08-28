@@ -14,7 +14,7 @@ export default function ManageUsers() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/admin/users');
+      const response = await api.get('/api/admin/users');
       setUsers(response.data);
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -25,7 +25,7 @@ export default function ManageUsers() {
 
   const toggleActive = async (id, currentStatus) => {
     try {
-      await api.put(`/admin/users/${id}/toggle-active`);
+      await api.put(`/api/admin/users/${id}/toggle-active`);
       setUsers(users.map(u => u.id === id ? { ...u, active: !currentStatus } : u));
     } catch (error) {
       console.error('Failed to toggle active status:', error);
@@ -34,7 +34,7 @@ export default function ManageUsers() {
 
   const toggleVerified = async (id, currentStatus) => {
     try {
-      await api.put(`/admin/users/${id}/toggle-verified`);
+      await api.put(`/api/admin/users/${id}/toggle-verified`);
       setUsers(users.map(u => u.id === id ? { ...u, verified: !currentStatus } : u));
     } catch (error) {
       console.error('Failed to toggle verified status:', error);

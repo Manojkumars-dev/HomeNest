@@ -14,7 +14,7 @@ export default function ManageProperties() {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/admin/properties');
+      const response = await api.get('/api/admin/properties');
       setProperties(response.data);
     } catch (error) {
       console.error('Failed to fetch properties:', error);
@@ -25,7 +25,7 @@ export default function ManageProperties() {
 
   const handleVerify = async (id) => {
     try {
-      await api.put(`/admin/properties/${id}/verify`);
+      await api.put(`/api/admin/properties/${id}/verify`);
       setProperties(properties.map(p => p.id === id ? { ...p, verified: true } : p));
     } catch (error) {
       console.error('Failed to verify property:', error);
@@ -34,7 +34,7 @@ export default function ManageProperties() {
 
   const handleReject = async (id) => {
     try {
-      await api.put(`/admin/properties/${id}/reject`);
+      await api.put(`/api/admin/properties/${id}/reject`);
       setProperties(properties.map(p => p.id === id ? { ...p, status: 'REJECTED' } : p));
     } catch (error) {
       console.error('Failed to reject property:', error);
@@ -44,7 +44,7 @@ export default function ManageProperties() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
       try {
-        await api.delete(`/admin/properties/${id}`);
+        await api.delete(`/api/admin/properties/${id}`);
         setProperties(properties.filter(p => p.id !== id));
       } catch (error) {
         console.error('Failed to delete property:', error);

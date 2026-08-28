@@ -31,7 +31,7 @@ export default function EditProperty() {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await api.get(`/properties/${id}`);
+        const response = await api.get(`/api/properties/${id}`);
         const prop = response.data;
         setFormData({
           type: prop.type || 'APARTMENT',
@@ -73,7 +73,7 @@ export default function EditProperty() {
     e.preventDefault();
     setSaving(true);
     try {
-      await api.put(`/owner/properties/${id}`, formData);
+      await api.put(`/api/owner/properties/${id}`, formData);
       alert('Property updated successfully!');
       navigate('/owner/my-properties');
     } catch (error) {

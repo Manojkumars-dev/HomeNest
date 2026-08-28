@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, Database, Monitor, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/api';
 
 export default function SystemHealth() {
   const [apiStatus, setApiStatus] = useState('Checking...');
@@ -9,7 +9,7 @@ export default function SystemHealth() {
   useEffect(() => {
     const checkHealth = async () => {
       try {
-        await axios.get('http://localhost:8080/api/auth/health', { timeout: 5000 });
+        await api.get('/api/auth/health');
         setApiStatus('Online');
       } catch (error) {
         setApiStatus('Offline');
@@ -83,10 +83,10 @@ export default function SystemHealth() {
       }}>
         <h2 style={{ fontFamily: 'var(--font-headline)', fontSize: '18px', marginBottom: '16px' }}>System Information</h2>
         <div style={{ fontFamily: 'monospace', fontSize: '14px', backgroundColor: '#1e293b', color: '#f8fafc', padding: '16px', borderRadius: '8px' }}>
-          <p style={{ margin: '0 0 8px 0' }}>{`> Backend URL: http://localhost:8080`}</p>
-          <p style={{ margin: '0 0 8px 0' }}>{`> Frontend URL: http://localhost:5173`}</p>
+          <p style={{ margin: '0 0 8px 0' }}>{`> Backend: Render Cloud Service`}</p>
+          <p style={{ margin: '0 0 8px 0' }}>{`> Frontend: Vercel Cloud`}</p>
           <p style={{ margin: '0 0 8px 0', color: '#94a3b8' }}>---</p>
-          <p style={{ margin: '0 0 8px 0' }}>{`> Environment: Development`}</p>
+          <p style={{ margin: '0 0 8px 0' }}>{`> Database: Aiven Cloud MySQL`}</p>
           <p style={{ margin: '0 0 8px 0' }}>{`> Java: 21 | Spring Boot: 3.2.5 | MySQL: 8.0`}</p>
         </div>
       </div>
