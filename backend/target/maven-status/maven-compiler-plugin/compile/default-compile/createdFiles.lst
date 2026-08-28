@@ -4,6 +4,7 @@ com\homenest\security\JwtUtil.class
 com\homenest\service\UserDetailsServiceImpl.class
 com\homenest\service\AuthService.class
 com\homenest\model\Application.class
+com\homenest\model\StringListConverter.class
 com\homenest\model\User$Builder.class
 com\homenest\repository\PropertyRepository.class
 com\homenest\controller\TenantController.class

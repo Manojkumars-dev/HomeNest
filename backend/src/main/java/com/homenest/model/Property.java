@@ -56,19 +56,16 @@ public class Property {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "property_amenities", joinColumns = @JoinColumn(name = "property_id"))
-    @Column(name = "amenity")
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> amenities = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "property_furnishing_items", joinColumns = @JoinColumn(name = "property_id"))
-    @Column(name = "item")
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> furnishingItems = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "property_images", joinColumns = @JoinColumn(name = "property_id"))
-    @Column(name = "image_url")
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> images = new ArrayList<>();
 
     @Column(updatable = false)
