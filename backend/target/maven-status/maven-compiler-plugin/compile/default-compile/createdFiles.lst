@@ -16,6 +16,7 @@ com\homenest\dto\LoginRequest.class
 com\homenest\model\User$Role.class
 com\homenest\dto\PropertyRequest.class
 com\homenest\repository\ApplicationRepository.class
+com\homenest\config\DataInitializer.class
 com\homenest\repository\SavedPropertyRepository.class
 com\homenest\config\GlobalExceptionHandler.class
 com\homenest\repository\UserRepository.class
