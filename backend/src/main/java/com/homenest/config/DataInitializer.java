@@ -94,9 +94,10 @@ public class DataInitializer implements CommandLineRunner {
                         .amenities(Arrays.asList("Lift", "Gym", "Swimming Pool", "Covered Parking", "Security", "Power Backup", "Wi-Fi", "Clubhouse"))
                         .furnishingItems(Arrays.asList("Sofa", "Dining Table", "Smart TV", "Double Bed", "Wardrobes", "Refrigerator", "AC", "Microwave", "Washing Machine"))
                         .images(Arrays.asList(
-                                "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80"
+                                "/properties/apt_living.jpg",
+                                "/properties/apt_bedroom.jpg",
+                                "/properties/apt_kitchen.jpg",
+                                "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
                         ))
                         .build(),
 
@@ -318,10 +319,10 @@ public class DataInitializer implements CommandLineRunner {
                         .amenities(Arrays.asList("Private Infinity Pool", "Sea View Deck", "Private Elevator", "Smart Home Automation", "Gym", "Jacuzzi", "24/7 Butler Service", "4-Car Parking", "EV Fast Charger"))
                         .furnishingItems(Arrays.asList("Custom Italian Furniture", "Bang & Olufsen Sound System", "Sub-Zero Refrigerator", "Miele Kitchen Appliances", "King California Beds", "Walk-in Closets", "Wine Cellar"))
                         .images(Arrays.asList(
-                                "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80"
+                                "/properties/villa_exterior.jpg",
+                                "/properties/villa_living.jpg",
+                                "/properties/villa_bedroom.jpg",
+                                "/properties/villa_kitchen.jpg"
                         ))
                         .build(),
 
@@ -357,10 +358,10 @@ public class DataInitializer implements CommandLineRunner {
                         .amenities(Arrays.asList("Rooftop Jacuzzi", "Sky Bar & Lounge", "Private Biometric Elevator", "Double Height Living Area", "Infinity Pool", "Clubhouse", "24/7 Concierge", "Power Backup"))
                         .furnishingItems(Arrays.asList("Designer Italian Leather Couches", "10-Seater Onyx Dining Table", "85-inch 8K OLED TV", "Bose Surround System", "King Plush Beds", "Bar Counter with Chiller"))
                         .images(Arrays.asList(
+                                "/properties/penthouse_rooftop.jpg",
                                 "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
                                 "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80",
-                                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80"
+                                "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80"
                         ))
                         .build(),
 

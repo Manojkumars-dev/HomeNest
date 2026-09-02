@@ -27,7 +27,12 @@ const FALLBACK_PROPERTIES = [
     area: 4800,
     type: 'Villa',
     verified: true,
-    images: ['https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80']
+    images: [
+      '/properties/villa_exterior.jpg',
+      '/properties/villa_living.jpg',
+      '/properties/villa_bedroom.jpg',
+      '/properties/villa_kitchen.jpg'
+    ]
   },
   {
     id: 8,
@@ -39,7 +44,26 @@ const FALLBACK_PROPERTIES = [
     area: 3600,
     type: 'Apartment',
     verified: true,
-    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80']
+    images: [
+      '/properties/penthouse_rooftop.jpg',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+    ]
+  },
+  {
+    id: 1,
+    title: 'Modern 2 BHK Sea-Breeze Apartment in Bandra West',
+    city: 'Mumbai',
+    locality: 'Bandra West',
+    rent: 65000,
+    bhk: 2,
+    area: 950,
+    type: 'Apartment',
+    verified: true,
+    images: [
+      '/properties/apt_living.jpg',
+      '/properties/apt_bedroom.jpg',
+      '/properties/apt_kitchen.jpg'
+    ]
   },
   {
     id: 9,
