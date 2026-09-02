@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Search, MapPin, Heart, Star, Shield,
   CheckCircle, ArrowRight, Building2,
-  Users, BadgeCheck, Home, Sparkles, User
+  Users, BadgeCheck, Home, Sparkles, User, Gem
 } from 'lucide-react';
+import { getAllProperties } from '../../api/propertyApi';
 
 const CITIES = [
   { name: 'Mumbai',    count: '12,400+', gradient: 'linear-gradient(135deg,#f5c6cb,#f8a5c2)' },
@@ -15,11 +16,79 @@ const CITIES = [
   { name: 'Pune',      count: '8,100+',  gradient: 'linear-gradient(135deg,#e0c3fc,#8ec5fc)' },
 ];
 
-const PROPERTIES = [
-  { id:1, title:'Modern 2BHK in Bandra', city:'Mumbai', locality:'Bandra West', rent:45000, bhk:2, area:950, type:'Apartment', verified:true,  gradient:'linear-gradient(135deg,#667eea,#764ba2)' },
-  { id:2, title:'Cozy Studio in Koramangala', city:'Bangalore', locality:'Koramangala', rent:22000, bhk:1, area:550, type:'Studio', verified:true,  gradient:'linear-gradient(135deg,#f093fb,#f5576c)' },
-  { id:3, title:'Spacious 3BHK Villa', city:'Hyderabad', locality:'Jubilee Hills', rent:65000, bhk:3, area:1800, type:'Villa', verified:false, gradient:'linear-gradient(135deg,#4facfe,#00f2fe)' },
-  { id:4, title:'Luxury Apartment in Juhu', city:'Mumbai', locality:'Juhu', rent:80000, bhk:3, area:2100, type:'Apartment', verified:true,  gradient:'linear-gradient(135deg,#43e97b,#38f9d7)' },
+const FALLBACK_PROPERTIES = [
+  {
+    id: 7,
+    title: 'Ultra-Luxury 5 BHK Beachfront Villa with Private Infinity Pool',
+    city: 'Mumbai',
+    locality: 'Juhu Beach',
+    rent: 275000,
+    bhk: 5,
+    area: 4800,
+    type: 'Villa',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80']
+  },
+  {
+    id: 8,
+    title: 'Lavish 4 BHK Sky Penthouse with Rooftop Jacuzzi',
+    city: 'Bangalore',
+    locality: 'Indiranagar',
+    rent: 180000,
+    bhk: 4,
+    area: 3600,
+    type: 'Apartment',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80']
+  },
+  {
+    id: 9,
+    title: 'Palatial 4 BHK Modern Architectural Mansion',
+    city: 'Hyderabad',
+    locality: 'Jubilee Hills',
+    rent: 160000,
+    bhk: 4,
+    area: 4200,
+    type: 'House',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80']
+  },
+  {
+    id: 10,
+    title: 'Boutique Luxury 1 BHK Garden Terrace Suite',
+    city: 'Pune',
+    locality: 'Koregaon Park',
+    rent: 42000,
+    bhk: 1,
+    area: 750,
+    type: 'Studio',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80']
+  },
+  {
+    id: 2,
+    title: 'Luxurious 4 BHK Gated Villa with Private Garden',
+    city: 'Bangalore',
+    locality: 'Whitefield',
+    rent: 95000,
+    bhk: 4,
+    area: 3200,
+    type: 'Villa',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80']
+  },
+  {
+    id: 6,
+    title: 'Contemporary 3 BHK Golf-Course View Condominium',
+    city: 'Delhi NCR',
+    locality: 'DLF Phase 5',
+    rent: 78000,
+    bhk: 3,
+    area: 1850,
+    type: 'Apartment',
+    verified: true,
+    images: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80']
+  }
 ];
 
 const TESTIMONIALS = [
@@ -31,10 +100,20 @@ const TESTIMONIALS = [
 // ---------- PROPERTY CARD COMPONENT ----------
 function PropertyCard({ property }) {
   const [saved, setSaved] = useState(false);
+  const imageUrl = property.images && property.images.length > 0 ? property.images[0] : null;
+  const isLuxury = property.rent >= 70000;
+
   return (
-    <div className="card" style={{ cursor:'pointer', position:'relative' }}>
-      {/* Image */}
-      <div style={{ height:'200px', background: property.gradient, position:'relative', overflow:'hidden' }}>
+    <div className="card" style={{ cursor:'pointer', position:'relative', overflow:'hidden' }}>
+      {/* Image Container */}
+      <div style={{
+        height:'220px',
+        backgroundColor:'#1a1c1c',
+        backgroundImage: imageUrl ? `url(${imageUrl})` : (property.gradient || 'linear-gradient(135deg,#667eea,#764ba2)'),
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        position:'relative'
+      }}>
         <button
           onClick={(e) => { e.stopPropagation(); setSaved(!saved); }}
           style={{
@@ -45,46 +124,72 @@ function PropertyCard({ property }) {
             alignItems:'center', justifyContent:'center',
             backdropFilter:'blur(4px)',
             transition:'transform 0.2s',
+            zIndex: 2
           }}
           aria-label="Save property"
         >
           <Heart size={16} fill={saved ? '#ba0036' : 'none'} color={saved ? '#ba0036' : '#1a1c1c'} />
         </button>
-        {property.verified && (
-          <div style={{
-            position:'absolute', top:'12px', left:'12px',
-            backgroundColor:'rgba(255,255,255,0.95)',
-            borderRadius:'999px', padding:'3px 10px',
-            fontSize:'11px', fontWeight:600, color:'#2e7d32',
-            display:'flex', alignItems:'center', gap:'4px',
-          }}>
-            <BadgeCheck size={12} /> Verified
-          </div>
-        )}
+
+        <div style={{ position:'absolute', top:'12px', left:'12px', display:'flex', gap:'6px', zIndex: 2 }}>
+          {property.verified && (
+            <div style={{
+              backgroundColor:'rgba(255,255,255,0.95)',
+              borderRadius:'999px', padding:'3px 10px',
+              fontSize:'11px', fontWeight:600, color:'#2e7d32',
+              display:'flex', alignItems:'center', gap:'4px',
+            }}>
+              <BadgeCheck size={12} /> Verified
+            </div>
+          )}
+          {isLuxury && (
+            <div style={{
+              backgroundColor:'rgba(26,28,28,0.9)',
+              borderRadius:'999px', padding:'3px 10px',
+              fontSize:'11px', fontWeight:600, color:'#ffd700',
+              display:'flex', alignItems:'center', gap:'4px',
+              border:'1px solid rgba(255,215,0,0.4)'
+            }}>
+              <Gem size={11} /> Luxury
+            </div>
+          )}
+        </div>
+
         <div style={{
           position:'absolute', bottom:'12px', left:'12px',
-          backgroundColor:'rgba(26,28,28,0.75)',
+          backgroundColor:'rgba(26,28,28,0.85)',
           borderRadius:'999px', padding:'4px 12px',
-          color:'#fff', fontSize:'13px', fontWeight:600,
+          color:'#fff', fontSize:'13px', fontWeight:700,
           backdropFilter:'blur(4px)',
+          border:'1px solid rgba(255,255,255,0.1)'
         }}>
           ₹{property.rent.toLocaleString('en-IN')}/mo
         </div>
       </div>
+
       {/* Info */}
-      <div style={{ padding:'16px' }}>
-        <h3 style={{ fontFamily:'var(--font-headline)', fontSize:'16px', fontWeight:700, marginBottom:'4px', color:'var(--color-on-surface)' }}>
+      <div style={{ padding:'18px' }}>
+        <h3 style={{
+          fontFamily:'var(--font-headline)',
+          fontSize:'16px',
+          fontWeight:700,
+          marginBottom:'6px',
+          color:'var(--color-on-surface)',
+          whiteSpace:'nowrap',
+          overflow:'hidden',
+          textOverflow:'ellipsis'
+        }}>
           {property.title}
         </h3>
-        <p style={{ color:'var(--color-foggy)', fontSize:'13px', display:'flex', alignItems:'center', gap:'4px', marginBottom:'12px' }}>
-          <MapPin size={13} /> {property.locality}, {property.city}
+        <p style={{ color:'var(--color-foggy)', fontSize:'13px', display:'flex', alignItems:'center', gap:'4px', marginBottom:'14px' }}>
+          <MapPin size={13} color="var(--color-primary)" /> {property.locality}, {property.city}
         </p>
-        <div style={{ display:'flex', gap:'8px', flexWrap:'wrap' }}>
+        <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginBottom:'16px' }}>
           <span className="chip">{property.bhk} BHK</span>
           <span className="chip">{property.area} sq.ft</span>
           <span className="chip">{property.type}</span>
         </div>
-        <Link to={`/property/${property.id}`} className="btn-primary" style={{ width:'100%', marginTop:'16px', justifyContent:'center' }}>
+        <Link to={`/property/${property.id}`} className="btn-primary" style={{ width:'100%', justifyContent:'center' }}>
           View Details
         </Link>
       </div>
@@ -96,6 +201,21 @@ function PropertyCard({ property }) {
 export default function LandingPage() {
   const navigate = useNavigate();
   const [searchForm, setSearchForm] = useState({ location:'', type:'', bhk:'' });
+  const [featuredProperties, setFeaturedProperties] = useState(FALLBACK_PROPERTIES);
+
+  useEffect(() => {
+    const fetchHomes = async () => {
+      try {
+        const data = await getAllProperties();
+        if (data && data.length > 0) {
+          setFeaturedProperties(data);
+        }
+      } catch (err) {
+        console.warn('Using fallback featured properties:', err);
+      }
+    };
+    fetchHomes();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -266,7 +386,7 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="grid-properties">
-            {PROPERTIES.map(p => <PropertyCard key={p.id} property={p} />)}
+            {featuredProperties.map(p => <PropertyCard key={p.id} property={p} />)}
           </div>
         </div>
       </section>

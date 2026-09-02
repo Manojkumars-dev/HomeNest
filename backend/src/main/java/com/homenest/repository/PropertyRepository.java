@@ -18,6 +18,8 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     List<Property> findByStatusAndVerified(String status, boolean verified);
 
+    boolean existsByTitle(String title);
+
     @Query("SELECT p FROM Property p WHERE " +
            "(:city IS NULL OR p.city = :city) AND " +
            "(:minRent IS NULL OR p.rent >= :minRent) AND " +
